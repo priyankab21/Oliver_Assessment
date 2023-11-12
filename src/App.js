@@ -44,16 +44,30 @@ function App() {
 
   const addButton = (parentIndex) => {
     const updatedSections = [...sections];
-    const newButton = {
+    let newButton = {
       text: buttonText,
-      styles: selectedSectionStyles,
+      styles: {... selectedSectionStyles},
       type: 'button',
     };
     if (parentIndex === undefined) {
+      console.log(sections, parentIndex, 'updatedParent')
+      if (sections.length === 1) {
+        newButton.styles.bottom = '100px';
+        newButton.styles.marginLeft = '30px';
+      } else if(sections.length === 2) {
+        newButton.styles.bottom = '200px';
+        newButton.styles.marginLeft = '60px';
+      } else if(sections.length === 3) {
+        newButton.styles.bottom = '300px';
+        newButton.styles.marginLeft = '90px';
+      } else if(sections.length === 4) {
+        newButton.styles.bottom = '400px';
+        newButton.styles.marginLeft = '120px';
+      }
       setSections([...sections, newButton]);
     } else {
-      updatedSections[parentIndex].children.push(newButton);
-      setSections(updatedSections);
+        updatedSections[parentIndex].children.push(newButton);
+        setSections(updatedSections);
     }
   };
 
@@ -65,8 +79,7 @@ function App() {
       } else {
         const updatedSections = [...sections];
         const updatedParent = { ...updatedSections[parentIndex] };
-        console.log(updatedParent, updatedSections, 'updatedSections');
-        if (updatedParent.children.length >= 1) {
+        if (updatedParent.children.length === 1) {
           newSection.styles.bottom = '100px';
           newSection.styles.marginLeft = '30px';
         } else if(updatedParent.children.length === 2) {
@@ -79,7 +92,7 @@ function App() {
           newSection.styles.bottom = '400px';
           newSection.styles.marginLeft = '120px';
         }
-        if (updatedParent.children.length < 5) {
+        if (updatedParent.children.length < 4) {
           updatedParent.children = [...updatedParent.children, newSection];
           updatedSections[parentIndex] = updatedParent;
           setSections(updatedSections);
